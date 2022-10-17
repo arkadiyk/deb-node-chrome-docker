@@ -12,3 +12,17 @@ RUN apt-get update && apt-get -y install gnupg wget ca-certificates libstdc++6 o
   apt-get install google-chrome-stable -y --no-install-recommends && \
   rm -rf /var/lib/apt/lists/*
 
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+
+WORKDIR /app
+
+# Install puppeteer so it's available in the container.
+RUN npm i puppeteer-pdf \
+    # Add user so we don't need --no-sandbox.
+    # same layer as npm install to keep re-chowned files from using up several hundred MBs more space
+    && groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
+    && mkdir -p /home/pptruser/Downloads \
+    && chown -R pptruser:pptruser /home/pptruser \
+    && chown -R pptruser:pptruser /app/node_modules 
+
+
