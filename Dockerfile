@@ -19,4 +19,4 @@ RUN npm i puppeteer-pdf -g \
     && groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && mkdir -p /home/pptruser/Downloads \
     && chown -R pptruser:pptruser /home/pptruser \
-    && chown -R pptruser:pptruser /app/node_modules \
+    # && chown -R pptruser:pptruser /app/node_modules \
